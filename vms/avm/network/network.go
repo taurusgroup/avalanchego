@@ -13,7 +13,7 @@ import (
 	"github.com/ava-labs/avalanchego/ids"
 	"github.com/ava-labs/avalanchego/snow"
 	"github.com/ava-labs/avalanchego/snow/engine/common"
-	"github.com/ava-labs/avalanchego/vms/avm/blocks/executor"
+	"github.com/ava-labs/avalanchego/vms/avm/block/executor"
 	"github.com/ava-labs/avalanchego/vms/avm/txs"
 	"github.com/ava-labs/avalanchego/vms/avm/txs/mempool"
 	"github.com/ava-labs/avalanchego/vms/components/message"
@@ -180,8 +180,6 @@ func (n *network) issueTx(tx *txs.Tx) error {
 }
 
 func (n *network) gossipTx(ctx context.Context, txID ids.ID, msgBytes []byte) {
-	// This lock is just to ensure there isn't racy behavior between checking if
-	// the tx was gossiped and marking the tx as gossiped.
 	n.recentTxsLock.Lock()
 	_, has := n.recentTxs.Get(txID)
 	n.recentTxs.Put(txID, struct{}{})

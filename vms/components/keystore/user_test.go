@@ -24,8 +24,7 @@ func TestUserClosedDB(t *testing.T) {
 	db, err := encdb.New([]byte(testPassword), memdb.New())
 	require.NoError(err)
 
-	err = db.Close()
-	require.NoError(err)
+	require.NoError(db.Close())
 
 	u := NewUserFromDB(db)
 
@@ -38,8 +37,7 @@ func TestUserClosedDB(t *testing.T) {
 	_, err = GetKeychain(u, nil)
 	require.ErrorIs(err, database.ErrClosed)
 
-	factory := secp256k1.Factory{}
-	sk, err := factory.NewPrivateKey()
+	sk, err := secp256k1.NewPrivateKey()
 	require.NoError(err)
 
 	err = u.PutKeys(sk)
@@ -58,16 +56,13 @@ func TestUser(t *testing.T) {
 	require.NoError(err)
 	require.Empty(addresses, "new user shouldn't have address")
 
-	factory := secp256k1.Factory{}
-	sk, err := factory.NewPrivateKey()
+	sk, err := secp256k1.NewPrivateKey()
 	require.NoError(err)
 
-	err = u.PutKeys(sk)
-	require.NoError(err)
+	require.NoError(u.PutKeys(sk))
 
 	// Putting the same key multiple times should be a noop
-	err = u.PutKeys(sk)
-	require.NoError(err)
+	require.NoError(u.PutKeys(sk))
 
 	addr := sk.PublicKey().Address()
 
