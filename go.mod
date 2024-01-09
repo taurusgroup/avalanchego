@@ -154,4 +154,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/ava-labs/coreth v0.12.9-rc.9 => github.com/taurusgroup/coreth v0.12.9-rc.9-taurus
+replace github.com/ava-labs/coreth v0.12.9-rc.9 => github.com/taurusgroup/coreth v0.12.10-rc.0-taurus
