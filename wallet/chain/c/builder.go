@@ -374,7 +374,7 @@ func (b *builder) NewExportTx(
 		return nil, errInsufficientFunds
 	}
 
-	utils.Sort(inputs)
+	utils.SortCmp(inputs)
 	tx.Ins = inputs
 	return tx, nil
 }
