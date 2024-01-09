@@ -4,9 +4,9 @@
 package sampler
 
 import (
-	"fmt"
 	"math"
 	"math/rand"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -149,7 +149,7 @@ func TestRNG(t *testing.T) {
 		},
 	}
 	for i, test := range tests {
-		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			require := require.New(t)
 
 			source := &testSource{
@@ -205,6 +205,6 @@ func FuzzRNG(f *testing.F) {
 		mathRNG := rand.New(stdSource) //#nosec G404
 		stdVal := mathRNG.Int63n(int64(max + 1))
 		require.Equal(val, uint64(stdVal))
-		require.Equal(len(source.nums), len(stdSource.nums))
+		require.Len(stdSource.nums, len(source.nums))
 	})
 }
